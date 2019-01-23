@@ -405,7 +405,7 @@ spring:
 @Aspect
 public class MyInterceptor {
 
-    @Pointcut("within (cn.tycoding.controller..*) && !within(cn.tycoding.controller.admin.LoginController)")
+    @Pointcut("within (cn.tycoding.controller..*) && !within(LoginController)")
     public void pointCut() {
     }
     @Around("pointCut()")
