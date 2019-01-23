@@ -32,26 +32,26 @@ public abstract class User implements Observable {
     @ManyToMany(mappedBy = "users")
     private List<Book> borrowedBooks = new ArrayList<>();
 
+
     public void accept(Borrower borrower){
         borrower.borrow(this);
     }
 
 
-
     @Transient
     //观察者数组,不与数据库映射
-    private List<Administrator> observers = new LinkedList<Administrator>();
+    private List<Administrator> observers = new LinkedList<>();
 
     /**
      * 可以在实例化时把所有的Admin注册上
      */
     @Override
-    public void Attach(Administrator admin){
+    public void attach(Administrator admin){
        observers.add(admin);
     }
 
     @Override
-    public void Detach(Administrator admin){
+    public void detach(Administrator admin){
          if(observers.contains(admin))
              observers.remove(admin);
          else
@@ -59,31 +59,29 @@ public abstract class User implements Observable {
     }
 
     @Override
-    public void Notify(){
+    public void notifyObservers(){
         for(Administrator admin:observers){
-            admin.Update();
+            admin.update();
         }
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
-        Notify();
+        notifyObservers();
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
-        Notify();
+        notifyObservers();
     }
 
     public void setPassword(String password) {
         this.password = password;
-        Notify();
+        notifyObservers();
     }
 
     public void setBalance(double balance) {
         this.balance = balance;
-        Notify();
+        notifyObservers();
     }
-
-
 }
