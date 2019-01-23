@@ -51,6 +51,9 @@ spring:
     #启用@Aspectj注解驱动的切面，允许Spring创建基于类的代理
     auto: true
     proxy-target-class: true
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 
 #mybatis配置
@@ -64,6 +67,5 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   #params: count=countSql
-
 
 
