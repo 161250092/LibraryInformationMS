@@ -82,6 +82,8 @@ var vm =new Vue({
             this.$refs.books.clearSelection();
         },
 
+
+
         //pageSize改变时触发的函数
         handleSizeChange(val) {
             this.search(this.pageConf.pageCode, val);
@@ -92,28 +94,66 @@ var vm =new Vue({
             this.search(val, this.pageConf.pageSize);
         },
 
-        //删
-        sureDelete(ids) {
+        //借书
+        borrowBook(ids) {
             this.$confirm('你确定借阅该书籍吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning',
                 center: true
             }).then(() => {
-                //调用删除的接口(这里必须将数据转换成JSON格式，不然接收不到值，并且后端要用@RequestBody注解标识)
                 this.$http.post('/borrowBooks', JSON.stringify(ids)).then(result => {
                     if (result.body.success) {
-                        //删除成功
+
                         this.selectIds = []; //清空选项
                         this.$message({
                             type: 'success',
                             message: result.body.message,
                             duration: 6000
                         });
+
+                        if ((this.pageConf.totalPage - 1) / this.pageConf.pageSize === (this.pageConf.pageCode - 1)) {
+                            this.pageConf.pageCode = this.pageConf.pageCode - 1;
+                        }
+                        this.reloadList();
+                    } else {
+                        //删除失败
+                        this.selectIds = []; //清空选项
+                        this.$message({
+                            type: 'warning',
+                            message: result.body.message,
+                            duration: 6000
+                        });
                         //刷新列表
-                        //为什么要判断并赋值？
-                        //答：即使调用reloadList()刷新列表，但是对于删除，在reloadList()中获取到的totalPage总记录和pageCode当前页都是未删除之前的记录，当遇到删除此页的最后一个记录时，页码会自动跳到上一页，但是table中的数据显示"暂无记录"
-                        //   所以要判断，如果是删除此页的最后一条记录，删除后自动跳转到前一页，数据也是前一页的数据
+                        this.reloadList();
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除',
+                    duration: 6000
+                });
+            });
+        },
+        //还书
+        returnBook(ids) {
+            this.$confirm('你确定归还该书籍吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$http.post('/returnBooks', JSON.stringify(ids)).then(result => {
+                    if (result.body.success) {
+
+                        this.selectIds = []; //清空选项
+                        this.$message({
+                            type: 'success',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+
                         if ((this.pageConf.totalPage - 1) / this.pageConf.pageSize === (this.pageConf.pageCode - 1)) {
                             this.pageConf.pageCode = this.pageConf.pageCode - 1;
                         }
@@ -139,89 +179,10 @@ var vm =new Vue({
             });
         },
 
-
-        //新建
-        save(editor) {
-            this.$refs[editor].validate((valid) => {
-                if (valid) {
-                    //关闭dialog
-                    this.showSave = false;
-                    //调用保存的接口
-                    this.$http.post('/books/create', JSON.stringify(this.editor)).then(result => {
-                        if (result.body.success) {
-                            //保存成功
-                            this.$message({
-                                type: 'success',
-                                message: result.body.message,
-                                duration: 6000
-                            });
-                            //刷新表格
-                            this.reloadList();
-                            this.editor = {};
-                            this.$refs.editor.resetFields();
-                        } else {
-                            //保存失败
-                            this.$emit(
-                                'save',
-                                this.$message({
-                                    type: 'warning',
-                                    message: result.body.message,
-                                    duration: 6000
-                                }),
-                            );
-                            //刷新表格
-                            this.reloadList();
-                            this.editor = {};
-                            this.$refs.editor.resetFields();
-                        }
-                    });
-                } else {
-                    this.$emit(
-                        'save',
-                        this.$message({
-                            message: '输入信息有误！',
-                            type: 'warning',
-                            duration: 6000
-                        }),
-                    );
-                    return false;
-                }
-            });
-        },
-
-        //新增按钮
-        saveBtn() {
-            //打开新增dialog
-            this.showSave = true;
-            this.editor = {}; //清空表单
-
-            //清空原始数据
-            if (this.$refs['editor'] !== undefined) {
-                this.$refs['editor'].resetFields(); //经查询：可能是由于对象还没有生成，导致误读了空对象而报错
-            }
-        },
+        readBooks(id){
 
 
-        //单个编辑
-        handleEdit(id) {
-            //打开dialog
-            this.showEditor = true;
-            this.editor = {}; //
-            for (i = 0; i < this.books.length; i++) {
-                if (books[i].bookId.equals(id)) {
-                    this.editor.title = this.books[i].title;
-                    this.editor.total = this.books[i].total;
-                    this.editor.borrowedNum = this.books[i].borrowedNum;
-                }
-            }
-
-        },
-
-
-
-
-
-
+        }
 
     },
 

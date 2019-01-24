@@ -266,7 +266,22 @@ var vm =new Vue({
                 var ids = new Array();
                 ids.push(id);
                 this.sureDelete(ids);
-            }
+            },
+
+            //批量删除
+            deleteSelect(rows) {
+                if (rows) {
+                    rows.forEach(row => {
+                        this.selectIds.push(row.id);
+                        this.$refs.books.toggleRowSelection(row);
+                    });
+                    //调用删除方法
+                    this.sureDelete(this.selectIds);
+                } else {
+                    this.$refs.goods.clearSelection();
+                }
+            },
+
 
 
         },
