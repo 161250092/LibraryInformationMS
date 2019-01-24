@@ -21,9 +21,16 @@ public class UserServiceProxy implements UserService{
     private UserServiceBean wrapped;
     private User user;
 
+    public UserServiceProxy() {
+        System.out.println("Proxy built!");
+    }
+
     @Autowired
     public void setWrapped(UserServiceBean wrapped) {
         this.wrapped = wrapped;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -76,10 +83,11 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public ResultMessage login(String userName, String password) {
-        if (isPermitted())
-            return wrapped.login(userName, password);
-        else
-            return ResultMessage.FAILURE;
+        ResultMessage message = wrapped.login(userName, password);
+        if (message != ResultMessage.FAILURE){
+            this.user = wrapped.findUserByName(userName);
+        }
+        return message;
     }
 
     @Override
@@ -97,6 +105,7 @@ public class UserServiceProxy implements UserService{
 
     private boolean isPermitted(){
         if (user == null){
+            //TODO
             return false;
         }
         return true;

@@ -1,6 +1,7 @@
 package cn.tycoding.service.user;
 
 import cn.tycoding.dao.UserDAO;
+import cn.tycoding.entity.Administrator;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.Undergraduate;
 import cn.tycoding.entity.User;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static cn.tycoding.util.ResultMessage.FAILURE;
-import static cn.tycoding.util.ResultMessage.SUCCESS;
+import static cn.tycoding.util.ResultMessage.*;
 
 /**
  * @author miaomuzhi
@@ -39,17 +39,27 @@ public class UserServiceBean implements UserService{
 
     @Override
     public ResultMessage deleteUser(long userId) {
-        return null;
+        try {
+            userDAO.deleteById(userId);
+            return SUCCESS;
+        } catch (Exception e){
+            return FAILURE;
+        }
     }
 
     @Override
     public ResultMessage modifyUser(User user) {
-        return null;
+        try {
+            userDAO.saveAndFlush(user);
+            return SUCCESS;
+        } catch (Exception e){
+            return FAILURE;
+        }
     }
 
     @Override
     public User findUser(long userId) {
-        return null;
+        return userDAO.getOne(userId);
     }
 
     @Override
@@ -59,12 +69,20 @@ public class UserServiceBean implements UserService{
 
     @Override
     public List<User> findAllUsers() {
-        return null;
+        return userDAO.findAll();
     }
 
     @Override
     public ResultMessage login(String userName, String password) {
-        return null;
+        User user = findUserByName(userName);
+        if (user != null && user.getPassword().equals(password)){
+            if (user.getClass() == Administrator.class){
+                return LOGIN_ADMIN;
+            } else {
+                return SUCCESS;
+            }
+        }
+        return FAILURE;
     }
 
     @Override
