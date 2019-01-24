@@ -14,6 +14,19 @@ import java.util.Objects;
 public class Undergraduate extends User {
     private String major;
 
+
+    public Undergraduate(){
+
+    }
+
+    public Undergraduate(long userId,String userName,String password,double balance,String major){
+        super.setUserId(userId);
+        super.setUserName(userName);
+        super.setPassword(password);
+        super.setBalance(balance);
+        this.major = major;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -37,6 +37,9 @@ public abstract class User implements Observable {
         borrower.borrow(this);
     }
 
+    public User(){
+
+    }
 
     @Transient
     //观察者数组,不与数据库映射
