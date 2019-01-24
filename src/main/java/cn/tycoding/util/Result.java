@@ -1,25 +1,22 @@
 package cn.tycoding.util;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
  * @auther TyCoding
  * @date 2018/9/28
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class Result implements Serializable {
 
     //判断结果
     private boolean success;
     //返回信息
     private String message;
-
-    public Result() {
-    }
-
-    public Result(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
 
     public boolean isSuccess() {
         return success;

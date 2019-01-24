@@ -1,37 +1,64 @@
 package cn.tycoding.service.literature;
 
+import cn.tycoding.dao.BookDAO;
 import cn.tycoding.entity.Book;
 import cn.tycoding.util.PageBean;
 import cn.tycoding.util.ResultMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static cn.tycoding.util.ResultMessage.FAILURE;
+import static cn.tycoding.util.ResultMessage.SUCCESS;
+
 @Service
-public class LiteratureServiceImpl implements LiteratureService{
+public class LiteratureServiceImpl implements LiteratureService {
+    private BookDAO bookDAO;
+
+    @Autowired
+    public void setBookDAO(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
+
     @Override
     public ResultMessage addBook(Book book) {
-        return null;
+        try {
+            bookDAO.save(book);
+            return SUCCESS;
+        } catch (Exception e){
+            return FAILURE;
+        }
     }
 
     @Override
     public ResultMessage deleteBook(long bookId) {
-        return null;
+        try {
+            bookDAO.deleteById(bookId);
+            return SUCCESS;
+        } catch (Exception e){
+            return FAILURE;
+        }
     }
 
     @Override
     public ResultMessage modifyBook(Book book) {
-        return null;
+        try {
+            bookDAO.saveAndFlush(book);
+            return SUCCESS;
+        } catch (Exception e){
+            return FAILURE;
+        }
     }
 
     @Override
     public Book findBook(long bookId) {
-        return null;
+        return bookDAO.getOne(bookId);
     }
 
     @Override
     public List<Book> findAllBooks() {
-        return null;
+        return bookDAO.findAll();
     }
 
     @Override
