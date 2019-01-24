@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 @Entity
 @Data
-public class Graduate extends User{
+public class Graduate extends User {
 
     private String major;
 

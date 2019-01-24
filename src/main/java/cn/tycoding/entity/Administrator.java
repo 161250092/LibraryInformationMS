@@ -7,7 +7,7 @@ import javax.persistence.Entity;
  * @since 2019/1/23
  */
 @Entity
-public class Administrator extends User implements Observer{
+public class Administrator extends User implements Observer {
 
     @Override
     public void update() {
