@@ -23,7 +23,9 @@ public class Book {
 
     private String title;
 
-    private int quantity;
+    private int totalNum;
+
+    private int borrowedNum;
 
     @ManyToMany
     @JoinTable(name="Borrowing",
