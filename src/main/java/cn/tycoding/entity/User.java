@@ -16,6 +16,7 @@ public abstract class User implements Observable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
+    @Column(unique=true)
     private String userName;
 
     private String password;

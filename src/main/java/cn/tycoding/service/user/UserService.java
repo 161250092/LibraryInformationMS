@@ -20,9 +20,11 @@ public interface UserService {
 
     User findUser(long userId);
 
+    User findUserByName(String userName);
+
     List<User> findAllUsers();
 
-    ResultMessage login(long userId, String password);
+    ResultMessage login(String userName, String password);
 
     boolean grantPermission(Permission permission);
 

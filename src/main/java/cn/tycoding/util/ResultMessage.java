@@ -5,5 +5,5 @@ package cn.tycoding.util;
  * @since 2019/1/24
  */
 public enum ResultMessage {
-    SUCCESS, FAILURE
+    SUCCESS, FAILURE, LOGIN_ADMIN
 }

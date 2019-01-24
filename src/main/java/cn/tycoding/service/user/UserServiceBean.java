@@ -2,6 +2,7 @@ package cn.tycoding.service.user;
 
 import cn.tycoding.dao.UserDAO;
 import cn.tycoding.entity.Permission;
+import cn.tycoding.entity.Undergraduate;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.ResultMessage;
 import cn.tycoding.vo.Report;
@@ -52,12 +53,17 @@ public class UserServiceBean implements UserService{
     }
 
     @Override
+    public User findUserByName(String userName) {
+        return new Undergraduate(123,"123","123",100.00,"软院");
+    }
+
+    @Override
     public List<User> findAllUsers() {
         return null;
     }
 
     @Override
-    public ResultMessage login(long userId, String password) {
+    public ResultMessage login(String userName, String password) {
         return null;
     }
 

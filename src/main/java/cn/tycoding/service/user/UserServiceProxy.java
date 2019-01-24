@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,42 +28,71 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public ResultMessage addUser(User user) {
-        return wrapped.addUser(user);
+        if (isPermitted())
+            return wrapped.addUser(user);
+        else
+            return ResultMessage.FAILURE;
     }
 
     @Override
     public ResultMessage deleteUser(long userId) {
-        return wrapped.deleteUser(userId);
+        if (isPermitted())
+            return wrapped.deleteUser(userId);
+        else
+            return ResultMessage.FAILURE;
     }
 
     @Override
     public ResultMessage modifyUser(User user) {
-        return wrapped.modifyUser(user);
+        if (isPermitted())
+            return wrapped.modifyUser(user);
+        else
+            return ResultMessage.FAILURE;
     }
 
     @Override
     public User findUser(long userId) {
-        return wrapped.findUser(userId);
+        if (isPermitted())
+            return wrapped.findUser(userId);
+        else
+            return null;
+    }
+
+    @Override
+    public User findUserByName(String userName) {
+        if (isPermitted())
+            return wrapped.findUserByName(userName);
+        else
+            return null;
     }
 
     @Override
     public List<User> findAllUsers() {
-        return wrapped.findAllUsers();
+        if (isPermitted())
+            return wrapped.findAllUsers();
+        else
+            return new ArrayList<>();
     }
 
     @Override
-    public ResultMessage login(long userId, String password) {
-        return wrapped.login(userId, password);
+    public ResultMessage login(String userName, String password) {
+        if (isPermitted())
+            return wrapped.login(userName, password);
+        else
+            return ResultMessage.FAILURE;
     }
 
     @Override
     public boolean grantPermission(Permission permission) {
-        return wrapped.grantPermission(permission);
+        return isPermitted() && wrapped.grantPermission(permission);
     }
 
     @Override
     public Report generateReport(long userId) {
-        return wrapped.generateReport(userId);
+        if (isPermitted())
+            return wrapped.generateReport(userId);
+        else
+            return null;
     }
 
     private boolean isPermitted(){
