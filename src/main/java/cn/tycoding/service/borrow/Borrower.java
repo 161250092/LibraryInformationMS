@@ -11,5 +11,7 @@ public interface Borrower {
     void borrow(Graduate user);
     void borrow(Administrator user);
     void borrow(Teacher user);
-    void borrow(User user);
+    default void borrow(User user){
+        System.err.println("An abstract user can't borrow books");
+    }
 }

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Administrator extends User implements Observer{
+
     @Override
     public void update() {
 
