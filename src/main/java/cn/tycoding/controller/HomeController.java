@@ -36,4 +36,25 @@ public class HomeController {
         return "site/books";
     }
 
+    /**
+     * 管理书籍页
+     * @return
+     */
+    @GetMapping(value = {"/manageBooks"})
+    public String manageBooks() {
+        return "admin/manageBooks";
+    }
+
+
+    /**
+     * 个人信息
+     * @return
+     */
+    @GetMapping("/personInformation")
+    public String personInformation() {
+        return "user/personInformation";
+    }
+
+
+
 }

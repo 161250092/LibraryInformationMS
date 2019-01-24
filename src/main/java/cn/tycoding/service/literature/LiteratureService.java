@@ -1,6 +1,7 @@
 package cn.tycoding.service.literature;
 
 import cn.tycoding.entity.Book;
+import cn.tycoding.util.PageBean;
 import cn.tycoding.util.ResultMessage;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface LiteratureService {
     Book findBook(long bookId);
 
     List<Book> findAllBooks();
+
+    PageBean findByConPage(int pageCode, int pageSize);
+
 }

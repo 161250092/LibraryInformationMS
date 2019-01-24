@@ -1,4 +1,4 @@
-package cn.tycoding.entity;
+package cn.tycoding.util;
 
 import java.io.Serializable;
 

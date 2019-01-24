@@ -1,8 +1,8 @@
 package cn.tycoding.controller.userContoller;
 
-import cn.tycoding.entity.Result;
 import cn.tycoding.entity.User;
 import cn.tycoding.service.user.UserService;
+import cn.tycoding.util.Result;
 import cn.tycoding.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +39,17 @@ public class LoginController {
             User user = userServiceProxy.findUserByName(username);
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             attributes.getRequest().getSession().setAttribute("user", user); //将登陆用户信息存入到session域对象中
-            return new Result(true, user.getUserName());
+            return new Result(true, "admin");
         }
+
+        else if(userServiceProxy.login(username, password) == ResultMessage.LOGIN_ADMIN){
+            User user = userServiceProxy.findUserByName(username);
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            attributes.getRequest().getSession().setAttribute("user", user); //将登陆用户信息存入到session域对象中
+            return new Result(true, "admin");
+        }
+
+
         return new Result(false, "登录失败");
     }
 
@@ -63,7 +72,6 @@ public class LoginController {
     public String login() {
         return "home/login";
     }
-
 
 
 }

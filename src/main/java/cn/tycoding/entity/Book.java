@@ -32,4 +32,9 @@ public class Book {
             joinColumns=@JoinColumn(name="bookId", referencedColumnName="bookId"),
             inverseJoinColumns=@JoinColumn(name="userId", referencedColumnName="userId"))
     private List<User> users = new ArrayList<>();
+
+
+
+
+
 }
