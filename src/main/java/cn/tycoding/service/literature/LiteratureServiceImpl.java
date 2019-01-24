@@ -11,6 +11,7 @@ import java.util.List;
 
 import static cn.tycoding.util.ResultMessage.FAILURE;
 import static cn.tycoding.util.ResultMessage.SUCCESS;
+import static java.lang.Math.min;
 
 @Service
 public class LiteratureServiceImpl implements LiteratureService {
@@ -63,6 +64,16 @@ public class LiteratureServiceImpl implements LiteratureService {
 
     @Override
     public PageBean findByConPage(int pageCode, int pageSize) {
-    return null;
+        List<Book> books = bookDAO.findAll();
+        int expectedStartIndex = (pageCode-1) * pageSize;
+        int expectedEndIndex = min(expectedStartIndex + pageSize, books.size());//complementary for the last part
+
+        PageBean pageBean = null;
+        if (expectedStartIndex < books.size()){
+            pageBean = new PageBean(books.size(), books.subList(expectedStartIndex, expectedEndIndex));
+        } else {
+            System.out.println("分页错误");
+        }
+        return pageBean;
     }
 }

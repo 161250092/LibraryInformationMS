@@ -21,6 +21,11 @@ public interface LiteratureService {
 
     List<Book> findAllBooks();
 
+    /**
+     * 根据pageSize把数据等分，在取出其中的第pageCode份，取出pageSize个数据，赋值到List row里
+     * @param pageCode 从0计数
+     * @param pageSize page容量
+     * @return page
+     */
     PageBean findByConPage(int pageCode, int pageSize);
-
 }
