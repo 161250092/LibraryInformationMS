@@ -3,6 +3,7 @@ package cn.tycoding.service.user;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.ResultMessage;
+import cn.tycoding.vo.Report;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface UserService {
 
     boolean grantPermission(Permission permission);
 
+    Report generateReport(long userId);
 }

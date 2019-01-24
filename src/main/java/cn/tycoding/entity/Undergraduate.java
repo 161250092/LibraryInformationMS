@@ -1,6 +1,8 @@
 package cn.tycoding.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import java.util.Objects;
@@ -11,13 +13,10 @@ import java.util.Objects;
  */
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Undergraduate extends User {
     private String major;
-
-
-    public Undergraduate(){
-
-    }
 
     public Undergraduate(long userId,String userName,String password,double balance,String major){
         super.setUserId(userId);

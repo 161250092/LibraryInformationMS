@@ -1,73 +1,74 @@
 package cn.tycoding.service.user;
 
-import cn.tycoding.dao.UserDAO;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.ResultMessage;
 import cn.tycoding.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static cn.tycoding.util.ResultMessage.FAILURE;
-import static cn.tycoding.util.ResultMessage.SUCCESS;
 
 /**
  * @author miaomuzhi
  * @since 2019/1/24
  */
-@Service
-public class UserServiceBean implements UserService{
-    private UserDAO userDAO;
+@Component
+@Scope("prototype")
+public class UserServiceProxy implements UserService{
+    private UserServiceBean wrapped;
+    private User user;
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public void setWrapped(UserServiceBean wrapped) {
+        this.wrapped = wrapped;
     }
 
     @Override
     public ResultMessage addUser(User user) {
-        try {
-            userDAO.save(user);
-            return SUCCESS;
-        } catch (Exception e){
-            return FAILURE;
-        }
+        return wrapped.addUser(user);
     }
 
     @Override
     public ResultMessage deleteUser(long userId) {
-        return null;
+        return wrapped.deleteUser(userId);
     }
 
     @Override
     public ResultMessage modifyUser(User user) {
-        return null;
+        return wrapped.modifyUser(user);
     }
 
     @Override
     public User findUser(long userId) {
-        return null;
+        return wrapped.findUser(userId);
     }
 
     @Override
     public List<User> findAllUsers() {
-        return null;
+        return wrapped.findAllUsers();
     }
 
     @Override
     public ResultMessage login(long userId, String password) {
-        return null;
+        return wrapped.login(userId, password);
     }
 
     @Override
     public boolean grantPermission(Permission permission) {
-        return false;
+        return wrapped.grantPermission(permission);
     }
 
     @Override
     public Report generateReport(long userId) {
-        return null;
+        return wrapped.generateReport(userId);
+    }
+
+    private boolean isPermitted(){
+        if (user == null){
+            return false;
+        }
+        return true;
     }
 }
