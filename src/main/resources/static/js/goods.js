@@ -195,7 +195,7 @@ var vm = new Vue({
                     //关闭dialog
                     this.showSave = false;
                     //调用保存的接口
-                    this.$http.post('/goods/create', JSON.stringify(this.editor)).then(result => {
+                    this.$http.post('/books/create', JSON.stringify(this.editor)).then(result => {
                         if (result.body.success) {
                             //保存成功
                             this.$message({

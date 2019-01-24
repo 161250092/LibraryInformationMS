@@ -11,7 +11,11 @@ import java.util.List;
  * @since 2019/1/24
  */
 public interface BorrowService {
-    ResultMessage borrowBooks(User user, List<Book> books);
 
-    ResultMessage returnBooks(User user, List<Book> books);
+
+    ResultMessage borrowBooks(User user, List<Long> books);
+
+    ResultMessage returnBooks(User user, List<Long> books);
+
+
 }

@@ -41,15 +41,15 @@ new Vue({
                         password: this.login.password,
                     }).then(result => {
                         // 判断用户是否登录成功，后端返回JSON格式数据，不然娶不到数据
-                        if (result.body.success) {
-                            // sessionStorage.setItem("name", this.login.name);
-                            // sessionStorage.setItem("token", this.login);
-                            // console.log(this.$store);
-                            // this.$store.dispatch("token", this.login);
-
+                        if (result.body.success&&result.body.message==="user") {
                             window.location.href = "/index";
                             this.loading.close(); //关闭动画加载
-                        } else {
+                        }
+                        else if(result.body.success&&result.body.message==="admin"){
+                            window.location.href = "/manageBooks";
+                            this.loading.close(); //关闭动画加载
+                        }
+                        else {
                             // 弹出错误信息框
                             this.$emit(
                                 'submit-form',
