@@ -1,8 +1,9 @@
 package cn.tycoding.service.borrow;
 
-import cn.tycoding.entity.Book;
+import cn.tycoding.dao.BookDAO;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.ResultMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,21 @@ import java.util.List;
  */
 @Service
 public class BorrowServiceBean implements BorrowService{
+    private Borrower borrower;
+    private BookDAO bookDAO;
+
+    @Autowired
+    public void setBorrower(Borrower borrower) {
+        this.borrower = borrower;
+    }
+    @Autowired
+    public void setBookDAO(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
 
     @Override
     public ResultMessage borrowBooks(User user, List<Long> books) {
-        return null;
+        return user.accept(borrower, bookDAO.findAllById(books));
     }
 
     @Override

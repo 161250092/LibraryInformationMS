@@ -1,32 +1,33 @@
 package cn.tycoding.service.borrow;
 
-import cn.tycoding.entity.Administrator;
-import cn.tycoding.entity.Graduate;
-import cn.tycoding.entity.Teacher;
-import cn.tycoding.entity.Undergraduate;
+import cn.tycoding.entity.*;
+import cn.tycoding.util.ResultMessage;
+
+import java.util.List;
 
 /**
+ * a sample for potential change
  * @author miaomuzhi
  * @since 2019/1/24
  */
 public class UnlimitedBorrower implements Borrower{
     @Override
-    public void borrow(Undergraduate user) {
-
+    public ResultMessage borrow(Undergraduate user, List<Book> books) {
+        return null;
     }
 
     @Override
-    public void borrow(Graduate user) {
-
+    public ResultMessage borrow(Graduate user, List<Book> books) {
+        return null;
     }
 
     @Override
-    public void borrow(Administrator user) {
-
+    public ResultMessage borrow(Administrator user, List<Book> books) {
+        return null;
     }
 
     @Override
-    public void borrow(Teacher user) {
-
+    public ResultMessage borrow(Teacher user, List<Book> books) {
+        return null;
     }
 }

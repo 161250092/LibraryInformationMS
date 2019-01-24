@@ -1,17 +1,21 @@
 package cn.tycoding.entity;
 
 import cn.tycoding.service.borrow.Borrower;
+import cn.tycoding.util.ResultMessage;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User implements Observable{
+public abstract class User implements Observable, Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
@@ -23,6 +27,7 @@ public abstract class User implements Observable{
 
     private double balance;
 
+    private int borrowingNum;
 
     @ManyToMany(mappedBy="members")
     private List<Department> belongedDepartments = new ArrayList<>();
@@ -32,15 +37,6 @@ public abstract class User implements Observable{
 
     @ManyToMany(mappedBy = "users")
     private List<Book> borrowedBooks = new ArrayList<>();
-
-
-    public void accept(Borrower borrower){
-        borrower.borrow(this);
-    }
-
-    public User(){
-
-    }
 
     @Transient
     //观察者数组,不与数据库映射
@@ -87,5 +83,9 @@ public abstract class User implements Observable{
     public void setBalance(double balance) {
         this.balance = balance;
         notifyObservers();
+    }
+
+    public ResultMessage accept(Borrower borrower, List<Book> books){
+        return borrower.borrow(this, books);
     }
 }

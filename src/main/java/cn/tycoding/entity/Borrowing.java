@@ -1,5 +1,6 @@
 package cn.tycoding.entity;
 
+import cn.tycoding.util.BorrowState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,6 @@ public class Borrowing {
 
     private LocalDate endDate;
 
-    private boolean overdue;
+    @Enumerated
+    private BorrowState state;
 }

@@ -1,5 +1,6 @@
 package cn.tycoding.entity;
 
+import cn.tycoding.util.BookCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,9 @@ public class Book {
     private long bookId;
 
     private String title;
+
+    @Enumerated
+    private BookCategory category;
 
     private int totalNum;
 
