@@ -42,28 +42,29 @@ public abstract class User implements Observable, Serializable{
 
     @Transient
     //观察者数组,不与数据库映射
-    private List<Administrator> observers = new LinkedList<>();
+    private List<Observer> observers = new LinkedList<>();
 
     /**
      * 可以在实例化时把所有的Admin注册上
+     * @param observer
      */
     @Override
-    public void attach(Administrator admin){
-       observers.add(admin);
+    public void attach(Observer observer) {
+        observers.add(observer);
     }
 
     @Override
-    public void detach(Administrator admin){
-         if(observers.contains(admin))
-             observers.remove(admin);
-         else
-             System.out.println("the admin isn't one of the observers");
+    public void detach(Observer observer) {
+        if(observers.contains(observer))
+            observers.remove(observer);
+        else
+            System.out.println("this observer isn't one of the observers");
     }
 
     @Override
     public void notifyObservers(){
-        for(Administrator admin:observers){
-            admin.update();
+        for (Observer observer : observers) {
+            observer.update();
         }
     }
 

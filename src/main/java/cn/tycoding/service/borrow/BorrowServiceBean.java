@@ -6,6 +6,7 @@ import cn.tycoding.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +25,11 @@ public class BorrowServiceBean implements BorrowService{
     @Autowired
     public void setBookDAO(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
+    }
+
+    @Override
+    public ResultMessage borrowBook(User user, long bookId) {
+        return borrowBooks(user, Collections.singletonList(bookId));
     }
 
     @Override
