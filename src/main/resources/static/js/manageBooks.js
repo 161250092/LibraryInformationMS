@@ -49,7 +49,7 @@ var vm =new Vue({
 
             dialogVisible: false,
 
-            activeIndex: '2', //默认激活
+            activeIndex: '1', //默认激活
             }
 
         },

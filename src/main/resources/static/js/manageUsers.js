@@ -62,7 +62,7 @@ var vm =new Vue({
         //分页获取书籍信息
         search(pageCode, pageSize) {
             this.loadings();
-            this.$http.post('/books/findUsersByConPage?pageSize=' + pageSize + '&pageCode=' + pageCode).then(result => {
+            this.$http.post('/users/findUsersByConPage?pageSize=' + pageSize + '&pageCode=' + pageCode).then(result => {
                 console.log(result);
                 this.users = result.body.rows;
                 this.pageConf.totalPage = result.body.total;

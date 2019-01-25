@@ -74,6 +74,6 @@ var Main = {
             this.$refs[formName].resetFields();
         }
     }
-}
-var Ctor = Vue.extend(Main)
-new Ctor().$mount('#app')
+};
+var Ctor = Vue.extend(Main);
+new Ctor().$mount('#app');

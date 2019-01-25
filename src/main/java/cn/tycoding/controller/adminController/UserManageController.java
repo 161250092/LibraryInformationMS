@@ -3,6 +3,7 @@ package cn.tycoding.controller.adminController;
 
 import cn.tycoding.entity.User;
 import cn.tycoding.service.user.UserService;
+import cn.tycoding.service.user.UserServiceBean;
 import cn.tycoding.util.PageBean;
 import cn.tycoding.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserManageController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceBean userService;
 
     @RequestMapping("/findUsersByConPage")
     public PageBean findByConPage(
@@ -24,7 +25,7 @@ public class UserManageController {
             @RequestParam(value = "pageSize", required = false) int pageSize) {
 
 
-        return null;
+        return userService.findUsersByConPage(pageCode,pageSize);
     }
 
     @RequestMapping("/updateUserInformation")
