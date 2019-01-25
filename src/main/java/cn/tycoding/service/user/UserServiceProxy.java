@@ -21,10 +21,6 @@ public class UserServiceProxy implements UserService{
     private UserServiceBean wrapped;
     private User user;
 
-    public UserServiceProxy() {
-        System.out.println("Proxy built!");
-    }
-
     @Autowired
     public void setWrapped(UserServiceBean wrapped) {
         this.wrapped = wrapped;

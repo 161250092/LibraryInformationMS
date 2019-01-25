@@ -39,7 +39,4 @@ public class Book implements Serializable{
     private List<User> users = new ArrayList<>();
 
 
-
-
-
 }

@@ -16,6 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements Observable, Serializable{
+    private static final long serialVersionUID = 6529685098267757690L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;

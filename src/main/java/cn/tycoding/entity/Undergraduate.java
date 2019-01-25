@@ -18,14 +18,6 @@ import java.util.Objects;
 public class Undergraduate extends User {
     private String major;
 
-    public Undergraduate(long userId,String userName,String password,double balance,String major){
-        super.setUserId(userId);
-        super.setUserName(userName);
-        super.setPassword(password);
-        super.setBalance(balance);
-        this.major = major;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,7 +29,6 @@ public class Undergraduate extends User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), major);
     }
 }
