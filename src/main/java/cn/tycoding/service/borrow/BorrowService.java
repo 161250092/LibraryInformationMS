@@ -13,4 +13,6 @@ public interface BorrowService {
     ResultMessage borrowBook(User user, long bookId);
     ResultMessage borrowBooks(User user, List<Long> books);
     ResultMessage returnBooks(User user, List<Long> books);
+    ResultMessage returnBook(User user,long bookId);
+
 }

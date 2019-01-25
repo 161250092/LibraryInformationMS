@@ -94,8 +94,97 @@ var vm =new Vue({
             this.search(val, this.pageConf.pageSize);
         },
 
-        //借书
-        borrowBook(ids) {
+
+        borrowBook(id){
+            this.$confirm('你确定借阅该书籍吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+        }).then(() => {
+                this.$http.post('/borrowBook', {
+                    bookId:id
+                }).then(result => {
+                    if (result.body.success) {
+                        this.selectIds = []; //清空选项
+                        this.$message({
+                            type: 'success',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+
+                        if ((this.pageConf.totalPage - 1) / this.pageConf.pageSize === (this.pageConf.pageCode - 1)) {
+                            this.pageConf.pageCode = this.pageConf.pageCode - 1;
+                        }
+                        this.reloadList();
+                    } else {
+                        this.$message({
+                            type: 'warning',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+                        this.reloadList();
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除',
+                    duration: 6000
+                });
+            });
+        },
+
+        returnBook(id){
+            this.$confirm('你确定归还该书籍吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+            }).then(() => {
+                this.$http.post('/returnBook', {
+                    bookId:id
+                }).then(result => {
+                    if (result.body.success) {
+                        this.selectIds = []; //清空选项
+                        this.$message({
+                            type: 'success',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+
+                        if ((this.pageConf.totalPage - 1) / this.pageConf.pageSize === (this.pageConf.pageCode - 1)) {
+                            this.pageConf.pageCode = this.pageConf.pageCode - 1;
+                        }
+                        this.reloadList();
+                    } else {
+                        this.$message({
+                            type: 'warning',
+                            message: result.body.message,
+                            duration: 6000
+                        });
+                        this.reloadList();
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除',
+                    duration: 6000
+                });
+            });
+        },
+
+        readBooks(id){
+
+
+        },
+
+
+
+
+        //批量借书
+        borrowBooks(ids) {
             this.$confirm('你确定借阅该书籍吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -136,8 +225,8 @@ var vm =new Vue({
                 });
             });
         },
-        //还书
-        returnBook(ids) {
+        //批量还书
+        returnBooks(ids) {
             this.$confirm('你确定归还该书籍吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -179,10 +268,7 @@ var vm =new Vue({
             });
         },
 
-        readBooks(id){
 
-
-        }
 
     },
 

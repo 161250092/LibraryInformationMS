@@ -1,10 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{../../lib/element-ui/lib/theme-chalk/index.css}"/>
+    <link rel="stylesheet" th:href="@{../../lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/goods.css}"/>
+    <link rel="stylesheet" th:href="@{../../css/public.css}"/>
 </head>
 <body>
+<div id="app">
+    <!-- header -->
+    <el-menu mode="horizontal" :default-active="activeIndex">
+        <el-menu-item index="0" id="logo">图书馆信息管理系统</el-menu-item>
+        <el-menu-item index="2"><a href="/manageBooks">图书列表</a></el-menu-item>
+        <el-menu-item id="author" index="3">
 
+            <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+            <el-dropdown>
+                <span class="el-dropdown-link">选项<i class="el-icon-arrow-down el-icon--right"></i></span>
+                <el-dropdown-menu slot="dropdown">
+
+                    <el-dropdown-item divided><a href="/logout">退出</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu-item>
+    </el-menu>
+
+    <div id="main">
+        <el-col>
+            <el-card shadow="hover">
+                <!-- 功能按钮 -->
+                <div>
+                    <el-row>
+                        <el-button @click="saveBtn" type="primary" icon="el-icon-plus">新增</el-button>
+                        <el-button type="primary" plain icon="el-icon-edit" @click="editSelect">编辑</el-button>
+                        <el-button type="danger" plain icon="el-icon-delete" @click="deleteSelect(multipleSelection)">删除
+                        </el-button>
+                        <el-button icon="el-icon-refresh"
+                                   @click="search(pageConf.pageCode,pageConf.pageSize)">刷新
+                        </el-button>
+                    </el-row>
+                    <span class="el-tag avue-tip">
+                    <i class="el-icon-info"></i>
+                    <span class="name">
+                        当前表格已选择
+                        <span class="count">{{count}}</span>
+                        项
+                    </span>
+                    <span @click.prevent="clearSelect()" style="cursor:pointer">&nbsp;&nbsp;清空</span>
+                </span>
+                </div>
+                <!-- 列表 -->
+                <el-table
+                        ref="books"
+                        :data="books"
+                        border
+                        tooltip-effect="dark"
+                        style="width: 100%"
+                        @selection-change="selectChange">
+
+                    <el-table-column
+                            ref="selection"
+                            align="center"
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column
+                            prop="bookId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="书籍号"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="title"
+                            sortable
+                            label="标题"
+                            width="120">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="totalNum"
+                            label="书籍总量"
+                            width="150">
+                    </el-table-column>
+                    <el-table-column
+                            align="center"
+                            prop="borrowedNum"
+                            sortable
+                            label="借阅总量"
+                            width="260"
+                            show-overflow-tooltip>
+                    </el-table-column>
+
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    plain icon="el-icon-delete"
+                                    @click="handleDelete(scope.row.bookId)">删除
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="primary"
+                                    plain icon="el-icon-edit"
+                                    @click="handleEdit(scope.row.bookId)">编辑
+                            </el-button>
+
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <el-pagination
+                            background
+                            @size-change="handleSizeChange"
+                            @current-change="handleCurrentChange"
+                            :current-page="pageConf.pageCode"
+                            :page-sizes="pageConf.pageOption"
+                            :page-size="pageConf.pageSize"
+                            layout="total, sizes, prev, pager, next, jumper"
+                            :total="pageConf.totalPage">
+                    </el-pagination>
+                </div>
+                <br/>
+                <br/>
+            </el-card>
+        </el-col>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <el-container>
+            <el-footer>
+                <el-row :gutter="20">
+                    <el-col :span="8" :offset="10">
+                        <div class="footer-inner">
+                            <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+                                <span class="with-love">
+                                    <i class="fa fa-heartbeat"></i>
+                                </span>
+                                <span class="author" itemprop="copyrightHolder">TyCoding</span>
+                            </div>
+                            <label>Spring Boot入门框架，实现简单的增删改查。页面使用Vue和ElementUI制作</label>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-footer>
+        </el-container>
+    </div>
+
+
+    <!-- 新增按钮的dialog -->
+    <el-dialog title="添加信息" :visible.sync="showSave" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+
+            <el-form-item prop="title" label="标题" class="is-required"
+                          :rules="[{ required: true, message: '标题不能为空'}]">
+                <el-input v-model="editor.title" placeholder="标题"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="totalNum" label="总量" class="is-required"
+                          :rules="[{ required: true, message: '总量不能为空'},{ type: 'number', message: '总量必须是数字'}]">
+                <el-input v-model.number="editor.total" placeholder="总量"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="borrowedNum" label="借阅数" class="is-required"
+                          :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '总量必须是数字'}]">
+                <el-input v-model="editor.borrowedNum" placeholder="借阅数"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showSave = false">取 消</el-button>
+            <el-button type="primary" @click="save('editor')">新增</el-button>
+        </div>
+    </el-dialog>
+
+    <!-- 编辑按钮的dialog -->
+    <el-dialog title="编辑信息" :visible.sync="showEditor" width="30%" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+
+        <el-form class="editor-form" :model="editor" status-icon ref="editor"
+                 label-width="100px">
+
+            <el-form-item prop="title" label="标题" class="is-required"
+                          :rules="[{ required: true, message: '标题不能为空'}]">
+                <el-input v-model="editor.title" placeholder="标题"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="totalNum" label="总量" class="is-required"
+                          :rules="[{ required: true, message: '总量不能为空'},{ type: 'number', message: '总量必须是数字'}]">
+                <el-input v-model.number="editor.totalNum" placeholder="总量"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+            <el-form-item prop="borrowedNum" label="借阅数" class="is-required"
+                          :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '借阅数必须是数字'}]">
+                <el-input v-model.number="editor.borrowedNum" placeholder="借阅数"
+                          auto-complete="off"></el-input>
+            </el-form-item>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showEditor = false">取 消</el-button>
+            <el-button type="primary"  @click="sureEdit('editor')">修改</el-button>
+        </div>
+    </el-dialog>
+
+</div>
 </body>
+<script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vue-resource.js}"></script>
+<script type="text/javascript" th:src="@{../../lib/vue/vuex.min.js}"></script>
+<script type="text/javascript" th:src="@{../../js/manageBooks.js}"></script>
 </html>

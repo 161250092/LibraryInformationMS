@@ -41,4 +41,9 @@ public class BorrowServiceBean implements BorrowService{
     public ResultMessage returnBooks(User user, List<Long> books) {
         return null;
     }
+
+    @Override
+    public ResultMessage returnBook(User user, long bookId) {
+        return null;
+    }
 }
