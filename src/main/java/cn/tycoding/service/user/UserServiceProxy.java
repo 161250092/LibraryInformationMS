@@ -1,5 +1,6 @@
 package cn.tycoding.service.user;
 
+import cn.tycoding.dao.PermissionDAO;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.ResultMessage;
@@ -19,11 +20,16 @@ import java.util.List;
 @Scope("prototype")
 public class UserServiceProxy implements UserService{
     private UserServiceBean wrapped;
+    private PermissionDAO permissionDAO;
     private User user;
 
     @Autowired
     public void setWrapped(UserServiceBean wrapped) {
         this.wrapped = wrapped;
+    }
+    @Autowired
+    public void setPermissionDAO(PermissionDAO permissionDAO) {
+        this.permissionDAO = permissionDAO;
     }
     public void setUser(User user) {
         this.user = user;
@@ -31,7 +37,7 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public ResultMessage addUser(User user) {
-        if (isPermitted())
+        if (isPermitted("addUser"))
             return wrapped.addUser(user);
         else
             return ResultMessage.FAILURE;
@@ -39,7 +45,7 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public ResultMessage deleteUser(long userId) {
-        if (isPermitted())
+        if (isPermitted("deleteUser"))
             return wrapped.deleteUser(userId);
         else
             return ResultMessage.FAILURE;
@@ -47,7 +53,7 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public ResultMessage modifyUser(User user) {
-        if (isPermitted())
+        if (isPermitted("modifyUser"))
             return wrapped.modifyUser(user);
         else
             return ResultMessage.FAILURE;
@@ -55,15 +61,12 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public User findUser(long userId) {
-        if (isPermitted())
-            return wrapped.findUser(userId);
-        else
-            return null;
+        return wrapped.findUser(userId);
     }
 
     @Override
     public User findUserByName(String userName) {
-        if (isPermitted())
+        if (isPermitted("findUserByName"))
             return wrapped.findUserByName(userName);
         else
             return null;
@@ -71,7 +74,7 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public List<User> findAllUsers() {
-        if (isPermitted())
+        if (isPermitted("findAllUsers"))
             return wrapped.findAllUsers();
         else
             return new ArrayList<>();
@@ -88,22 +91,25 @@ public class UserServiceProxy implements UserService{
 
     @Override
     public boolean grantPermission(Permission permission) {
-        return isPermitted() && wrapped.grantPermission(permission);
+        return isPermitted("grantPermission") && wrapped.grantPermission(permission);
     }
 
     @Override
     public Report generateReport(long userId) {
-        if (isPermitted())
+        if (isPermitted("generateReport"))
             return wrapped.generateReport(userId);
         else
             return null;
     }
 
-    private boolean isPermitted(){
-        if (user == null){
-            //TODO
+    private boolean isPermitted(String method){
+        if (user != null){
+            List<Permission> permissions = permissionDAO.findAll();
+            permissions.removeIf(permission -> !permission.authorize(user.getUserId())
+                    || method.matches(permission.getType()));
+            return !permissions.isEmpty();
+        } else {
             return false;
         }
-        return true;
     }
 }
