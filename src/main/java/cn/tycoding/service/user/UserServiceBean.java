@@ -4,6 +4,7 @@ import cn.tycoding.dao.UserDAO;
 import cn.tycoding.entity.Administrator;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
+import cn.tycoding.util.PageBean;
 import cn.tycoding.util.ResultMessage;
 import cn.tycoding.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static cn.tycoding.util.ResultMessage.*;
+import static java.lang.Math.min;
 
 /**
  * @author miaomuzhi
@@ -69,6 +71,21 @@ public class UserServiceBean implements UserService{
     @Override
     public List<User> findAllUsers() {
         return userDAO.findAll();
+    }
+
+    @Override
+    public PageBean findUsersByConPage(int pageCode, int pageSize) {
+        List<User> users = userDAO.findAll();
+        int expectedStartIndex = (pageCode-1) * pageSize;
+        int expectedEndIndex = min(expectedStartIndex + pageSize, users.size());//complementary for the last part
+
+        PageBean pageBean = null;
+        if (expectedStartIndex < users.size()){
+            pageBean = new PageBean(users.size(), users.subList(expectedStartIndex, expectedEndIndex));
+        } else {
+            System.out.println("分页错误");
+        }
+        return pageBean;
     }
 
     @Override

@@ -3,6 +3,7 @@ package cn.tycoding.service.user;
 import cn.tycoding.dao.PermissionDAO;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
+import cn.tycoding.util.PageBean;
 import cn.tycoding.util.ResultMessage;
 import cn.tycoding.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,14 @@ public class UserServiceProxy implements UserService{
             return wrapped.findAllUsers();
         else
             return new ArrayList<>();
+    }
+
+    @Override
+    public PageBean findUsersByConPage(int pageCode, int pageSize) {
+        if (isPermitted("findUsersByConPage"))
+            return wrapped.findUsersByConPage(pageCode, pageSize);
+        else
+            return null;
     }
 
     @Override

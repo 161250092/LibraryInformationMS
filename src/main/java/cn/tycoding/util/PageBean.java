@@ -1,6 +1,5 @@
 package cn.tycoding.util;
 
-import cn.tycoding.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +17,11 @@ import java.util.List;
 public class PageBean implements Serializable {
     /**
      * 当前页
-     * 所有记录书籍的数量
+     * （如所有记录书籍的数量）
      */
     private long total;
     /**
      * 当前页记录
      */
-    private List<Book> rows;
+    private List rows;
 }

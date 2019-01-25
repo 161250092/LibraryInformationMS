@@ -2,6 +2,7 @@ package cn.tycoding.service.user;
 
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
+import cn.tycoding.util.PageBean;
 import cn.tycoding.util.ResultMessage;
 import cn.tycoding.vo.Report;
 
@@ -23,6 +24,8 @@ public interface UserService {
     User findUserByName(String userName);
 
     List<User> findAllUsers();
+
+    PageBean findUsersByConPage(int pageCode, int pageSize);
 
     ResultMessage login(String userName, String password);
 

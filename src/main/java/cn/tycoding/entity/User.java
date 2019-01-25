@@ -2,6 +2,7 @@ package cn.tycoding.entity;
 
 import cn.tycoding.service.borrow.Borrower;
 import cn.tycoding.util.ResultMessage;
+import cn.tycoding.vo.Update;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -64,7 +65,7 @@ public abstract class User implements Observable, Serializable{
     @Override
     public void notifyObservers(){
         for (Observer observer : observers) {
-            observer.update();
+            observer.update(new Update(this, "User info updated"));
         }
     }
 
