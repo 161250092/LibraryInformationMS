@@ -5,10 +5,7 @@ import cn.tycoding.service.literature.LiteratureService;
 import cn.tycoding.util.PageBean;
 import cn.tycoding.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/books")
@@ -68,13 +65,15 @@ public class BookManageController {
 
     /**
      * 更新书籍信息
-     * @param book
+     * @param
      * @return
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody Book book){
+    @ResponseBody
+    public Result update(@RequestParam("bookId")long bookId,@RequestParam("title")String title,@RequestParam("totalNum")int totalNum,
+    @RequestParam("borrowedNum")int borrowedNum){
         try{
-            literatureService.modifyBook(book);
+         //   literatureService.modifyBook(book);
             return new Result(true, "创建成功");
         }catch (Exception e){
             e.printStackTrace();

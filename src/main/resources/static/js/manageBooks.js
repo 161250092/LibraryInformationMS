@@ -32,6 +32,7 @@ var vm =new Vue({
             //被checkbox选择的id值，用于批量删除
             selectIds: [],
 
+            selectId:'',
 
             count: 0, //tag栏，此项那是checkbox选择了几行
 
@@ -217,12 +218,13 @@ var vm =new Vue({
             //单个编辑
             handleEdit(id) {
                 //打开dialog
+                this.selectId = id;
                 this.showEditor = true;
                 this.editor = {}; //
                 for( i=0;i<this.books.length;i++){
                     if(books[i].bookId.equals(id)){
                         this.editor.title = this.books[i].title;
-                        this.editor.total = this.books[i].total;
+                        this.editor.totalNum = this.books[i].total;
                         this.editor.borrowedNum = this.books[i].borrowedNum;
                     }
                 }
@@ -234,7 +236,13 @@ var vm =new Vue({
                 //关闭对话框
                 this.showEditor = false;
                 //调用更新数据的接口
-                this.$http.post('/books/update', JSON.stringify(this.editor)).then(result => {
+                this.$http.post('/books/update',
+                    {
+                        bookId:this.selectId,
+                        title:this.editor.title,
+                        totalNum:this.editor.totalNum,
+                        borrowedNum:this.editor.borrowedNum
+                    }).then(result => {
                     if (result.body.success) {
                         //更新成功
                         this.$message({

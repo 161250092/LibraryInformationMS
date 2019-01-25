@@ -84,7 +84,7 @@
                     </el-table-column>
                     <el-table-column
                             align="center"
-                            prop="total"
+                            prop="totalNum"
                             label="书籍总量"
                             width="150">
                     </el-table-column>
@@ -166,13 +166,13 @@
                           auto-complete="off"></el-input>
             </el-form-item>
 
-            <el-form-item prop="price" label="总量" class="is-required"
+            <el-form-item prop="totalNum" label="总量" class="is-required"
                           :rules="[{ required: true, message: '总量不能为空'},{ type: 'number', message: '总量必须是数字'}]">
                 <el-input v-model.number="editor.total" placeholder="总量"
                           auto-complete="off"></el-input>
             </el-form-item>
 
-            <el-form-item prop="brand" label="借阅数" class="is-required"
+            <el-form-item prop="borrowedNum" label="借阅数" class="is-required"
                           :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '总量必须是数字'}]">
                 <el-input v-model="editor.borrowedNum" placeholder="借阅数"
                           auto-complete="off"></el-input>
@@ -198,14 +198,14 @@
                           auto-complete="off"></el-input>
             </el-form-item>
 
-            <el-form-item prop="price" label="总量" class="is-required"
+            <el-form-item prop="totalNum" label="总量" class="is-required"
                           :rules="[{ required: true, message: '总量不能为空'},{ type: 'number', message: '总量必须是数字'}]">
                 <el-input v-model.number="editor.total" placeholder="总量"
                           auto-complete="off"></el-input>
             </el-form-item>
 
-            <el-form-item prop="brand" label="借阅数" class="is-required"
-                          :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '总量必须是数字'}]">
+            <el-form-item prop="borrowedNum" label="借阅数" class="is-required"
+                          :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '借阅数必须是数字'}]">
                 <el-input v-model="editor.borrowedNum" placeholder="借阅数"
                           auto-complete="off"></el-input>
             </el-form-item>
