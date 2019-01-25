@@ -66,10 +66,10 @@ public class DataGenerator {
         departmentDAO.flush();
 
         Permission all = new Permission();
-        all.setType("*");
+        all.setType(".*");
         all.getPermittedIndividuals().add(admin);
         Permission search = new Permission();
-        search.setType("find*");
+        search.setType("find.*");
         permissionDAO.saveAll(Arrays.asList(all, search));
         permissionDAO.flush();
     }

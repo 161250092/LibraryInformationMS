@@ -191,6 +191,4 @@ var vm =new Vue({
         this.search(this.pageConf.pageCode, this.pageConf.pageSize);
         this.loadings(); //加载动画
     }
-
-
-}
+});
