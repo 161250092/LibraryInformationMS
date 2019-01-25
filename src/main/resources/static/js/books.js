@@ -37,6 +37,8 @@ var vm =new Vue({
             dialogVisible: false,
 
             activeIndex: '1', //默认激活
+
+            showBookURL:false
         }
 
     },
@@ -268,7 +270,40 @@ var vm =new Vue({
             });
         },
 
+        readBook(id){
+            this.selectId = id;
+            this.showBookURL = true;
+        },
 
+        turnPDFPage(){
+            this.$http.post('/pdf',{
+                bookId:this.selectId
+            }).then(result => {
+                console.log(result);
+                var url = result.body.url;
+                window.open(url);
+            });
+        },
+
+        turnDocPage(){
+            this.$http.post('/doc',{
+                bookId:this.selectId
+            }).then(result => {
+                console.log(result);
+                var url = result.body.url;
+                window.open(url);
+            });
+        },
+
+        turnPPTPage(){
+            this.$http.post('/ppt',{
+                bookId:this.selectId
+            }).then(result => {
+                console.log(result);
+                var url = result.body.url;
+                window.open(url);
+            });
+        }
 
     },
 
