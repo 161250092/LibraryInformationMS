@@ -218,16 +218,18 @@ var vm =new Vue({
             //单个编辑
             handleEdit(id) {
                 //打开dialog
+                console.log(id);
                 this.selectId = id;
                 this.showEditor = true;
                 this.editor = {}; //
-                for( i=0;i<this.books.length;i++){
-                    if(books[i].bookId.equals(id)){
-                        this.editor.title = this.books[i].title;
-                        this.editor.totalNum = this.books[i].total;
-                        this.editor.borrowedNum = this.books[i].borrowedNum;
-                    }
-                }
+                // for(var i=0;i<this.books.length;i++){
+                //     if(this.books[i].bookId.equals(id)){
+                //         this.editor.title = this.books[i].title;
+                //         this.editor.totalNum = this.books[i].total;
+                //         this.editor.borrowedNum = this.books[i].borrowedNum;
+                //     }
+                // }
+
 
             },
 

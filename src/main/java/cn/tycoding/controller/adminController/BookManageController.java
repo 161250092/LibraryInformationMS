@@ -73,8 +73,9 @@ public class BookManageController {
     public Result update(@RequestParam("bookId")long bookId,@RequestParam("title")String title,@RequestParam("totalNum")int totalNum,
     @RequestParam("borrowedNum")int borrowedNum){
         try{
-         //   literatureService.modifyBook(book);
-            return new Result(true, "创建成功");
+            System.out.println("修改书籍信息");
+         // literatureService.modifyBook(book);
+            return new Result(true, "修改成功");
         }catch (Exception e){
             e.printStackTrace();
             return new Result(false, "发生未知错误");

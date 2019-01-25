@@ -13,7 +13,6 @@
     <!-- header -->
     <el-menu mode="horizontal" :default-active="activeIndex">
         <el-menu-item index="0" id="logo">图书馆信息管理系统</el-menu-item>
-        <el-menu-item index="1"><a href="/index">首页</a></el-menu-item>
         <el-menu-item index="2"><a href="/manageBooks">图书列表</a></el-menu-item>
         <el-menu-item id="author" index="3">
 
@@ -102,10 +101,13 @@
                             <el-button
                                     size="mini"
                                     type="danger"
+                                    plain icon="el-icon-delete"
                                     @click="handleDelete(scope.row.bookId)">删除
                             </el-button>
                             <el-button
                                     size="mini"
+                                    type="primary"
+                                    plain icon="el-icon-edit"
                                     @click="handleEdit(scope.row.bookId)">编辑
                             </el-button>
 
@@ -200,13 +202,13 @@
 
             <el-form-item prop="totalNum" label="总量" class="is-required"
                           :rules="[{ required: true, message: '总量不能为空'},{ type: 'number', message: '总量必须是数字'}]">
-                <el-input v-model.number="editor.total" placeholder="总量"
+                <el-input v-model.number="editor.totalNum" placeholder="总量"
                           auto-complete="off"></el-input>
             </el-form-item>
 
             <el-form-item prop="borrowedNum" label="借阅数" class="is-required"
                           :rules="[{ required: true, message: '借阅数不能为空'},{ type: 'number', message: '借阅数必须是数字'}]">
-                <el-input v-model="editor.borrowedNum" placeholder="借阅数"
+                <el-input v-model.number="editor.borrowedNum" placeholder="借阅数"
                           auto-complete="off"></el-input>
             </el-form-item>
 
@@ -214,7 +216,7 @@
 
         <div slot="footer" class="dialog-footer">
             <el-button @click="showEditor = false">取 消</el-button>
-            <el-button type="primary" @click="sureEdit('editor')">修改</el-button>
+            <el-button type="primary"  @click="sureEdit('editor')">修改</el-button>
         </div>
     </el-dialog>
 

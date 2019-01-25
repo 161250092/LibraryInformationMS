@@ -43,7 +43,7 @@ public class LoginController {
             User user = userService.findUserByName(username);
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             attributes.getRequest().getSession().setAttribute("user", user); //将登陆用户信息存入到session域对象中
-            return new Result(true, "admin");
+            return new Result(true, "user");
         } else if(userService.login(username, password) == ResultMessage.LOGIN_ADMIN){
             User user = userService.findUserByName(username);
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
