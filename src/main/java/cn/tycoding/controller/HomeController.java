@@ -55,6 +55,15 @@ public class HomeController {
         return "user/personInformation";
     }
 
+    /**
+     * 个人信息
+     * @return
+     */
+    @GetMapping("/manageUsers")
+    public String manageUsers() {
+        return "admin/manageUsers";
+    }
+
 
 
 }

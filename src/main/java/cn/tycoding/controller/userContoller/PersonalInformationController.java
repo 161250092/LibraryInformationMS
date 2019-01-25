@@ -12,7 +12,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @RestController
 @RequestMapping("/personInformation")
-
 public class PersonalInformationController {
 
     @Autowired

@@ -42,10 +42,10 @@ public class BorrowBookController {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         User user =(User)attributes.getRequest().getSession().getAttribute("user");
         System.out.println("还一本书");
-        if(borrowService.borrowBook(user,bookId)== ResultMessage.SUCCESS)
+        //if(borrowService.borrowBook(user,bookId)== ResultMessage.SUCCESS)
             return new Result(true," 还书成功");
-        else
-            return new Result(false,"还书失败");
+//        else
+//            return new Result(false,"还书失败");
 
     }
 
