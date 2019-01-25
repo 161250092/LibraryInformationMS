@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class readOnlineController {
+public class ReadOnlineController {
     public Context context;
 
     @RequestMapping("/pdf")
