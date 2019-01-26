@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,13 +27,8 @@ public class NotificationController {
     }
 
     @RequestMapping("/receive")
-    public List<Update> receiveUpdates(HttpSession session){
-        System.out.println("Receive");
-        Object user = session.getAttribute("user");
-        if (user != null && user.getClass() == Administrator.class)
-            return notificationService.receiveUpdates();
-        else
-            return new ArrayList<>();
+    public List<Update> receiveUpdates(){
+        return notificationService.receiveUpdates();
     }
 
     @RequestMapping("/confirm")

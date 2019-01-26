@@ -8,9 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +36,11 @@ public class DataGenerator {
     private PermissionDAO permissionDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private UpdateDAO updateDAO;
 
     @Test
+    @Rollback(false)
     public void generate() {
         List<Book> bookList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -72,5 +77,13 @@ public class DataGenerator {
         search.setType("find.*");
         permissionDAO.saveAll(Arrays.asList(all, search));
         permissionDAO.flush();
+    }
+
+    @Test
+    @Rollback(false)
+    public void generateSecondly(){
+        User user = userDAO.findUserByUserName("123");
+        Update update = new Update(0, user, "demo update", LocalDateTime.now(), false);
+        updateDAO.save(update);
     }
 }

@@ -12,31 +12,17 @@ var vm = new Vue({
             content: "",
             updateTime: new Date()
         }],
-
-        loading: {},
     },
 
     methods: {
         confirmUpdate(updateId) {
-            this.loadings()
-        },
 
-        loadings() {
-            this.loading = this.$loading({
-                lock: true,
-                text: '拼命加载中',
-                spinner: 'el-icon-loading',
-            });
-            setTimeout(() => {
-                this.loading.close();
-            }, 2000);
         },
 
         search() {
             this.$http.get("/notification/receive").then(result => {
                 console.log(result);
-                this.update = result.body;
-                this.loading.close()
+                this.updates = result.body;
             })
         },
     },
