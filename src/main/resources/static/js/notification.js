@@ -39,19 +39,19 @@ var vm = new Vue({
                 this.loading.close()
             })
         },
+    },
 
-        created() {
-            console.log("Created!")
-        }
-    }
+    created() {
+        this.search()
+    },
 });
 
 
 // polling
-$(document).ready(function(){
-    var timer = setInterval(function(){ajax_receive(timer)}, 3000);
-});
-
-function ajax_receive(timer) {
-    $.search();
-}
+// $(document).ready(function(){
+//     var timer = setInterval(function(){ajax_receive(timer)}, 3000);
+// });
+//
+// function ajax_receive(timer) {
+//     $.search();
+// }

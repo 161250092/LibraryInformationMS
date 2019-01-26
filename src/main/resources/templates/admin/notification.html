@@ -29,63 +29,67 @@
     </div>
 
     <div id="main">
-        <el-table ref="updates"
-                  :data="updates"
-                  border
-                  tooltip-effect="dark"
-                  style="width: 100%">
-            <el-table-column
-                    prop="updateId"
-                    align="center"
-                    sortable
-                    fixed
-                    label="变更ID"
-                    width="120"/>
-            <el-table-column
-                    prop="user.userId"
-                    align="center"
-                    sortable
-                    fixed
-                    label="用户ID"
-                    width="120"/>
-            <el-table-column
-                    prop="user.userName"
-                    align="center"
-                    sortable
-                    fixed
-                    label="用户名"
-                    width="120"/>
-            <el-table-column
-                    prop="user.balance"
-                    align="center"
-                    sortable
-                    label="余额"
-                    width="120"
-                    show-overflow-tooltip/>
-            <el-table-column
-                    prop="updateTime"
-                    align="center"
-                    sortable
-                    label="变更时间"
-                    width="120"/>
-            <el-table-column
-                    prop="content"
-                    align="center"
-                    sortable
-                    label="变更内容"
-                    width="260"
-                    show-overflow-tooltip/>
-            <el-table-column label="操作" align="center" fixed="right">
-                <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="primary"
-                            plain icon="el-icon-edit"
-                            @click="confirmUpdate(scope.row.updateId)">编辑
-                    </el-button>
-                </template>
-            </el-table-column>
-        </el-table>
+        <el-col>
+            <el-card shadow="hover">
+                <el-table ref="updates"
+                          :data="updates"
+                          border
+                          tooltip-effect="dark"
+                          style="width: 100%">
+                    <el-table-column
+                            prop="updateId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="变更ID"
+                            width="120"/>
+                    <el-table-column
+                            prop="user.userId"
+                            align="center"
+                            sortable
+                            fixed
+                            label="用户ID"
+                            width="120"/>
+                    <el-table-column
+                            prop="user.userName"
+                            align="center"
+                            sortable
+                            fixed
+                            label="用户名"
+                            width="120"/>
+                    <el-table-column
+                            prop="user.balance"
+                            align="center"
+                            sortable
+                            label="余额"
+                            width="120"
+                            show-overflow-tooltip/>
+                    <el-table-column
+                            prop="updateTime"
+                            align="center"
+                            sortable
+                            label="变更时间"
+                            width="120"/>
+                    <el-table-column
+                            prop="content"
+                            align="center"
+                            sortable
+                            label="变更内容"
+                            width="260"
+                            show-overflow-tooltip/>
+                    <el-table-column label="操作" align="center" fixed="right">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="primary"
+                                    plain icon="el-icon-edit"
+                                    @click="confirmUpdate(scope.row.updateId)">编辑
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-card>
+        </el-col>
 
         <!-- footer -->
         <div class="footer">
