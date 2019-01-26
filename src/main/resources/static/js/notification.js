@@ -1,3 +1,5 @@
+Vue.http.options.emulateJSON = true;
+
 var vm = new Vue({
     el: "#app",
 
@@ -16,7 +18,9 @@ var vm = new Vue({
 
     methods: {
         confirmUpdate(updateId) {
-
+            this.$http.post("/notification/confirm", JSON.stringify(updateId)).then(
+                this.search()
+            )
         },
 
         search() {
@@ -28,16 +32,13 @@ var vm = new Vue({
     },
 
     created() {
-        this.search()
+        this.search();
+
+        //polling
+        var timer = setInterval(function(){
+            vm.search();
+        }, 3000);
     },
 });
 
 
-// polling
-// $(document).ready(function(){
-//     var timer = setInterval(function(){ajax_receive(timer)}, 3000);
-// });
-//
-// function ajax_receive(timer) {
-//     $.search();
-// }

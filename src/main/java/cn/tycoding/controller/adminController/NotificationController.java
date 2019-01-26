@@ -1,6 +1,5 @@
 package cn.tycoding.controller.adminController;
 
-import cn.tycoding.entity.Administrator;
 import cn.tycoding.entity.Update;
 import cn.tycoding.service.notification.NotificationService;
 import cn.tycoding.util.Result;
@@ -33,9 +32,7 @@ public class NotificationController {
 
     @RequestMapping("/confirm")
     public Result confirmUpdates(@RequestBody long updateId, HttpSession session){
-        Object user = session.getAttribute("user");
-        if (user != null && user.getClass() == Administrator.class
-                && notificationService.confirmUpdate(updateId)){
+        if (notificationService.confirmUpdate(updateId)){
             return new Result(true, "通知信息接收");
         } else {
             return new Result(false, "通知失败");
