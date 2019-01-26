@@ -1,12 +1,13 @@
 package cn.tycoding.service.user;
 
+import cn.tycoding.dao.PermissionDAO;
 import cn.tycoding.dao.UserDAO;
 import cn.tycoding.entity.Administrator;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.PageBean;
+import cn.tycoding.util.Report;
 import cn.tycoding.util.ResultMessage;
-import cn.tycoding.vo.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +23,15 @@ import static java.lang.Math.min;
 @Service
 public class UserServiceBean implements UserService{
     private UserDAO userDAO;
+    private PermissionDAO permissionDAO;
 
     @Autowired
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+    @Autowired
+    public void setPermissionDAO(PermissionDAO permissionDAO) {
+        this.permissionDAO = permissionDAO;
     }
 
     @Override
@@ -103,7 +109,13 @@ public class UserServiceBean implements UserService{
 
     @Override
     public boolean grantPermission(Permission permission) {
-        return false;
+        try {
+            permissionDAO.saveAndFlush(permission);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
 
     @Override

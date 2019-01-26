@@ -1,10 +1,11 @@
 package cn.tycoding.service.notification;
 
+import cn.tycoding.dao.UpdateDAO;
 import cn.tycoding.entity.Observer;
-import cn.tycoding.vo.Update;
+import cn.tycoding.entity.Update;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,20 +15,32 @@ import java.util.List;
  */
 @Service
 public class NotificationServiceBean implements NotificationService, Observer {
-    private List<Update> updates = new ArrayList<>();
+    private UpdateDAO updateDAO;
 
-    @Override
-    public List<Update> receiveUpdates() {
-        return null;
+    @Autowired
+    public void setUpdateDAO(UpdateDAO updateDAO) {
+        this.updateDAO = updateDAO;
     }
 
     @Override
-    public void confirmUpdates(List<Update> updates) {
+    public List<Update> receiveUpdates() {
+        return updateDAO.findUpdatesByConfirmed(false);
+    }
 
+    @Override
+    public boolean confirmUpdate(long updateId) {
+        try {
+            Update modifiedUpdate = updateDAO.getOne(updateId);
+            modifiedUpdate.setConfirmed(true);
+            updateDAO.saveAndFlush(modifiedUpdate);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
     public void update(Update update) {
-
+        updateDAO.saveAndFlush(update);
     }
 }

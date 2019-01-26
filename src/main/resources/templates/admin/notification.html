@@ -9,10 +9,105 @@
     <link rel="stylesheet" th:href="@{../../css/public.css}"/>
 </head>
 <body>
+    <div id="notification">
+        <el-menu mode="horizontal" :default-active="activeIndex">
+            <el-menu-item index="0" id="logo">图书馆信息系统</el-menu-item>
+            <el-menu-item index="1"><a href="/index">首页</a></el-menu-item>
+            <el-menu-item index="2"><a href="/books">图书列表</a></el-menu-item>
+            <el-menu-item index="3"><a href="/personInformation">个人中心</a></el-menu-item>
+            <el-menu-item id="author" index="3">
+                <img class="el-tooltip" src="http://tycoding.cn/author/avatar.png"/>
+                <el-dropdown>
+                    <span class="el-dropdown-link">选项<i class="el-icon-arrow-down el-icon--right"/></span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item><a href="/personInformation">个人首页</a></el-dropdown-item>
+                        <el-dropdown-item divided><a href="/logout">退出</a></el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-menu-item>
+        </el-menu>
+    </div>
 
+    <div id="main">
+        <el-table ref="updates"
+                  :data="updates"
+                  border
+                  tooltip-effect="dark"
+                  style="width: 100%">
+            <el-table-column
+                    prop="updateId"
+                    align="center"
+                    sortable
+                    fixed
+                    label="变更ID"
+                    width="120"/>
+            <el-table-column
+                    prop="user.userId"
+                    align="center"
+                    sortable
+                    fixed
+                    label="用户ID"
+                    width="120"/>
+            <el-table-column
+                    prop="user.userName"
+                    align="center"
+                    sortable
+                    fixed
+                    label="用户名"
+                    width="120"/>
+            <el-table-column
+                    prop="user.balance"
+                    align="center"
+                    sortable
+                    label="余额"
+                    width="120"
+                    show-overflow-tooltip/>
+            <el-table-column
+                    prop="updateTime"
+                    align="center"
+                    sortable
+                    label="变更时间"
+                    width="120"/>
+            <el-table-column
+                    prop="content"
+                    align="center"
+                    sortable
+                    label="变更内容"
+                    width="260"
+                    show-overflow-tooltip/>
+            <el-table-column label="操作" align="center" fixed="right">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            type="primary"
+                            plain icon="el-icon-edit"
+                            @click="confirmUpdate(scope.row.updateId)">编辑
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
 
-
-
+        <!-- footer -->
+        <div class="footer">
+            <el-container>
+                <el-footer>
+                    <el-row :gutter="20">
+                        <el-col :span="8" :offset="10">
+                            <div class="footer-inner">
+                                <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+                                    <span class="with-love">
+                                    <i class="fa fa-heartbeat"/>
+                                </span>
+                                    <span class="author" itemprop="copyrightHolder">TyCoding</span>
+                                </div>
+                                <label>Spring Boot入门框架，实现简单的增删改查。页面使用Vue和ElementUI制作</label>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-footer>
+            </el-container>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" th:src="@{../../lib/vue/vue.js}"></script>
 <script type="text/javascript" th:src="@{../../lib/element-ui/lib/index.js}"></script>

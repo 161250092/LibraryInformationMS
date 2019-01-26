@@ -64,6 +64,13 @@ public class HomeController {
         return "admin/manageUsers";
     }
 
-
+    /**
+     * 个人信息变更通知
+     * @return
+     */
+    @GetMapping("/notification")
+    public String notification() {
+        return "admin/notification";
+    }
 
 }

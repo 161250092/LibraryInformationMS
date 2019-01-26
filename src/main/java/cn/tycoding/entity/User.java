@@ -2,12 +2,12 @@ package cn.tycoding.entity;
 
 import cn.tycoding.service.borrow.Borrower;
 import cn.tycoding.util.ResultMessage;
-import cn.tycoding.vo.Update;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,10 +33,10 @@ public abstract class User implements Observable, Serializable{
     private int borrowingNum;
 
     @ManyToMany(mappedBy="members")
-    private List<Department> belongedDepartments = new ArrayList<>();
+    private transient List<Department> belongedDepartments = new ArrayList<>();
 
     @ManyToMany(mappedBy = "permittedIndividuals")
-    private List<Permission> permissions = new ArrayList<>();
+    private transient List<Permission> permissions = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
     private List<Book> borrowedBooks = new ArrayList<>();
@@ -65,7 +65,7 @@ public abstract class User implements Observable, Serializable{
     @Override
     public void notifyObservers(){
         for (Observer observer : observers) {
-            observer.update(new Update(this, "User info updated"));
+            observer.update(new Update(0, this, "User info updated", LocalDateTime.now(), false));
         }
     }
 

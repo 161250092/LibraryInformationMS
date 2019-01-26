@@ -3,8 +3,8 @@ package cn.tycoding.service.user;
 import cn.tycoding.entity.Permission;
 import cn.tycoding.entity.User;
 import cn.tycoding.util.PageBean;
+import cn.tycoding.util.Report;
 import cn.tycoding.util.ResultMessage;
-import cn.tycoding.vo.Report;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package cn.tycoding.service.notification;
 
-import cn.tycoding.vo.Update;
+import cn.tycoding.entity.Update;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface NotificationService {
     List<Update> receiveUpdates();
-    void confirmUpdates(List<Update> updates);
+    boolean confirmUpdate(long updateId);
 }

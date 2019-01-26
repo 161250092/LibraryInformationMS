@@ -3,10 +3,11 @@ package cn.tycoding.controller.userContoller;
 import cn.tycoding.entity.User;
 import cn.tycoding.service.user.UserService;
 import cn.tycoding.util.Result;
-import cn.tycoding.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -15,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class PersonalInformationController {
 
     @Autowired
-    private UserService userServiceProxy;
+    private UserService userServiceBean;
 
     @RequestMapping("/update")
     @ResponseBody

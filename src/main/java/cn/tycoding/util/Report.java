@@ -1,4 +1,4 @@
-package cn.tycoding.vo;
+package cn.tycoding.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
