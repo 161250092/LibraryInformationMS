@@ -29,6 +29,7 @@ public class NotificationController {
 
     @RequestMapping("/receive")
     public List<Update> receiveUpdates(HttpSession session){
+        System.out.println("Receive");
         Object user = session.getAttribute("user");
         if (user != null && user.getClass() == Administrator.class)
             return notificationService.receiveUpdates();
