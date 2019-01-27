@@ -77,13 +77,8 @@ public class DataGenerator {
         search.setType("find.*");
         permissionDAO.saveAll(Arrays.asList(all, search));
         permissionDAO.flush();
-    }
 
-    @Test
-    @Rollback(false)
-    public void generateSecondly(){
-        User user = userDAO.findUserByUserName("123");
-        Update update = new Update(0, user, "demo update", LocalDateTime.now(), false);
-        updateDAO.save(update);
+        Update update = new Update(0, undergraduate, "demo update", LocalDateTime.now(), false);
+        updateDAO.saveAndFlush(update);
     }
 }
